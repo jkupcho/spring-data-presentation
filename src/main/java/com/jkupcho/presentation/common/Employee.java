@@ -1,4 +1,4 @@
-package com.jkupcho.presentation.common.entity;
+package com.jkupcho.presentation.common;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

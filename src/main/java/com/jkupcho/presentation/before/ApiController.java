@@ -1,4 +1,4 @@
-package com.jkupcho.presentation.before.web;
+package com.jkupcho.presentation.before;
 
 import java.util.List;
 
@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.jkupcho.presentation.common.entity.Employee;
+import com.jkupcho.presentation.common.Employee;
 
 @Controller
 @RequestMapping("/api")

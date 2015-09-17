@@ -1,4 +1,4 @@
-package com.jkupcho.presentation.common.entity;
+package com.jkupcho.presentation.common;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.rest.core.config.Projection;
