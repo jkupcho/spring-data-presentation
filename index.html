@@ -240,7 +240,7 @@ layout: false
 template: inverse
 ## HATEOAS
 ---
-layout:false
+layout: false
 .left-column[
   ## HATEOAS
   ### - What is it?
@@ -253,18 +253,17 @@ Sample HATEOAS Response:
 {
   "_links": {
     "search": {
-      "href": "http://localhost:8080/employee/search"
+      "href": "http://localhost/employee/search"
     }
   },
   "_embedded": {
     "employees": [
       {
         "first": "Angela",
-        "middle": "Debra",
         "last": "Griffin",
         "_links": {
           "self": {
-            "href": "http://localhost:8080/employee/1{?projection}",
+            "href": "http://localhost/employee/1{?projection}",
             "templated": true
           }
         }
