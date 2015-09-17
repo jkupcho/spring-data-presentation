@@ -249,6 +249,95 @@ layout: false
 HATEOAS provides the client self-discovery of resources available.
 
 Sample HATEOAS Response:
+
+```javascript
+{
+  "_links": {
+    "search": {
+      "href": "http://host/employee/search"
+    }
+  },
+  "_embedded": {
+    "employees": [
+      {
+        "first": "Angela",
+        "last": "Griffin",
+        "_links": {
+          "self": {
+            "href": "http://host/employee/1{?projection}",
+            "templated": true
+          }
+        }
+      },
+      ...
+   ]
+```
+]
+---
+layout: false
+.left-column[
+  ## HATEOAS
+  ### - What is it?
+  ### - Response
+]
+.right-column[
+```javascript
+{
+  "_links": {
+    "search": {
+      "href": "http://host/employee/search"
+    }
+  },
+  ...
+```
+This block informs the client that there are other endpoints associated with this resource.
+
+More specifically, it tells the client there is a search endpoint which they might be interested in.
+]
+---
+layout: false
+.left-column[
+  ## HATEOAS
+  ### - What is it?
+  ### - Response
+]
+.right-column[
+```javascript
+{
+  "first": "Angela",
+  "last": "Griffin",
+  "_links": {
+    "self": {
+      "href": "http://host/employee/1{?projection}",
+      "templated": true
+    }
+  }
+},
+```
+This block tells the client that this specific resource ties to the following url:
+__http://host/employee/1__
+
+It also tells the client that there is an optional projection parameter.
+]
+---
+layout: false
+.left-column[
+  ## HATEOAS
+  ### - What is it?
+  ### - Response
+  ### - Use it?
+]
+.right-column[
+HATEOAS does add a certain amount of overhead, and should be carefully considered before being used.
+
+From [Oliver Gierke](http://stackoverflow.com/questions/24421538/spring-data-rest-without-hateoas) the main contributor to the project. 
+- How do you write a client without hard coding URIs (if it did, it wasn't particularly restful)?
+
+- How do you handle relationships between resources? How do you let clients create them, update them etc.?
+
+- How does the client discover which query resources are available? How does it find out about the parameters to pass etc.?
+
+If the application doesn't need an answer any of these questions, it has no need for HATEOAS.
 ]
 ---
 template: inverse
