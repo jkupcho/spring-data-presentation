@@ -12,8 +12,13 @@ public class Employee {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
+	
 	@Column(name="FIRST_NM")
 	private String first;
+	
+	@Column(name="MIDDLE_NM")
+	private String middle;
+	
 	@Column(name="LAST_NM")
 	private String last;
 	
@@ -22,6 +27,9 @@ public class Employee {
 	}
 	public String getFirst() {
 		return first;
+	}
+	public String getMiddle() {
+		return middle;
 	}
 	public String getLast() {
 		return last;

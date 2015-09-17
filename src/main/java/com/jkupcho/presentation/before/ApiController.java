@@ -3,13 +3,9 @@ package com.jkupcho.presentation.before;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.ParameterExpression;
-import javax.persistence.criteria.Root;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -24,44 +20,37 @@ import com.jkupcho.presentation.common.Employee;
 
 @Controller
 @RequestMapping("/api")
+@Transactional(readOnly=true)	
 public class ApiController {
 
-	@Autowired
+	@PersistenceContext
 	private EntityManager entityManager;
 	
 	@Transactional
 	@RequestMapping(value="/employee", method=RequestMethod.POST, consumes="application/json")
 	public @ResponseBody ResponseEntity<Employee> create(@RequestBody Employee employee) {
 		try {
-			entityManager.persist(employee);
+			if (employee.getId() != null) {
+				entityManager.persist(employee);
+			} else {
+				employee = entityManager.merge(employee);
+			}
 			return new ResponseEntity<>(employee, HttpStatus.CREATED);
 		} catch (Exception e) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 	}
 	
-	@Transactional(readOnly=true)	
 	@RequestMapping(value="/employee/{id}", method=RequestMethod.GET, produces="application/json")
 	public @ResponseBody ResponseEntity<Employee> create(@PathVariable("id") Long id) {
 		return new ResponseEntity<Employee>(entityManager.find(Employee.class, id), HttpStatus.OK);
 	}
 	
-	@Transactional(readOnly=true)
 	@RequestMapping(value="/employee/findByFirst/{first}", method=RequestMethod.GET, produces="application/json")
 	public @ResponseBody ResponseEntity<List<Employee>> create(@PathVariable("first") String first) {
-		CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+		TypedQuery<Employee> query = entityManager.createQuery("select emp from Employee emp where UPPER(emp.first) = ?1", Employee.class);
+		query.setParameter(1, first.toUpperCase());
 		
-		CriteriaQuery<Employee> query = builder.createQuery(Employee.class);
-		Root<Employee> employee = query.from(Employee.class);
-		
-		query.select(employee);
-		
-		ParameterExpression<String> firstNameEquals = builder.parameter(String.class, "first");
-		query.where(builder.equal(employee.get("first"), firstNameEquals));
-		
-		TypedQuery<Employee> finalQuery = entityManager.createQuery(query);
-		finalQuery.setParameter("first", first);
-		
-		return new ResponseEntity<List<Employee>>(finalQuery.getResultList(), HttpStatus.OK);
+		return new ResponseEntity<List<Employee>>(query.getResultList(), HttpStatus.OK);
 	}
 }
