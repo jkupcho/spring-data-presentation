@@ -249,27 +249,6 @@ layout: false
 HATEOAS provides the client self-discovery of resources available.
 
 Sample HATEOAS Response:
-
-```javascript
-{
-  "_links": {
-    "search": {
-      "href": "http://localhost/employee/search"
-    }
-  },
-  "_embedded": {
-    "employees": [
-      {
-        "first": "Angela",
-        "last": "Griffin",
-        "_links": {
-          "self": {
-            "href": "http://localhost/employee/1{?projection}",
-            "templated": true
-          }
-        }
-      },
-```
 ]
 ---
 template: inverse
