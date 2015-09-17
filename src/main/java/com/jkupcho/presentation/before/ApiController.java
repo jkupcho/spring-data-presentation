@@ -41,6 +41,11 @@ public class ApiController {
 		}
 	}
 	
+	@RequestMapping(value="/employees", method=RequestMethod.GET, produces="application/json")
+	public @ResponseBody ResponseEntity<List<Employee>> findAll() {
+		return new ResponseEntity<List<Employee>>(entityManager.createQuery("select emp from Employee emp", Employee.class).getResultList(), HttpStatus.OK);
+	}
+	
 	@RequestMapping(value="/employee/{id}", method=RequestMethod.GET, produces="application/json")
 	public @ResponseBody ResponseEntity<Employee> create(@PathVariable("id") Long id) {
 		return new ResponseEntity<Employee>(entityManager.find(Employee.class, id), HttpStatus.OK);
