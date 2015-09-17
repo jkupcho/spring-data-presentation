@@ -238,6 +238,45 @@ layout: false
 ]
 ---
 template: inverse
+## HATEOAS
+---
+layout:false
+.left-column[
+  ## HATEOAS
+  ### - What is it?
+]
+.right-column[
+HATEOAS provides the client self-discovery of resources available.
+
+Sample HATEOAS Response:
+```javascript
+{
+  "_links": {
+    "search": {
+      "href": "http://localhost:8080/employee/search"
+    }
+  },
+  "_embedded": {
+    "employees": [
+      {
+        "first": "Angela",
+        "middle": "Debra",
+        "last": "Griffin",
+        "_links": {
+          "self": {
+            "href": "http://localhost:8080/employee/1{?projection}",
+            "templated": true
+          }
+        }
+      },
+```
+The sample provides the following information to the client:
+- There is a search endpoint for the employee resource at __http://localhost:8080/employee/search__
+- __Angela Griffin's__ specific resource endpoint is located at __http://localhost:8080/employee/1__
+  - This endpoint also offers a __projection__ parameter  
+]
+---
+template: inverse
 ## Demo
     </textarea>
     <script src="https://gnab.github.io/remark/downloads/remark-latest.min.js" type="text/javascript">
